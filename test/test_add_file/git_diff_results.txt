@@ -1,0 +1,52 @@
+diff --git a/c_testcase/basic/Makefile b/c_testcase/basic/Makefile
+index d7039ee..c2434bf 100644
+--- a/c_testcase/basic/Makefile
++++ b/c_testcase/basic/Makefile
+@@ -1 +1 @@
+-OBJS=uiv.o npd.o msf.o dbf.o uaf.o
++OBJS=uiv.o npd.o msf.o dbf.o uaf.o npd2.o
+diff --git a/c_testcase/basic/global.h b/c_testcase/basic/global.h
+new file mode 100644
+index 0000000..a01b8b9
+--- /dev/null
++++ b/c_testcase/basic/global.h
+@@ -0,0 +1,24 @@
++#ifndef global_h_included
++#define global_h_included
++
++struct S {
++  int *p;
++};
++
++extern int  aob_assign(int*, int);
++extern void dbf_free_1(void*);
++extern void dbf_free_2(void*);
++extern void msf_free(struct S*);
++extern int  npd_assign(int*);
++extern void uaf_free(void*);
++extern int  uiv_assign(int*);
++
++extern void test_aob();
++extern void test_dbf();
++extern void test_msf();
++extern void test_npd();
++extern void test_uaf();
++extern void test_uiv();
++extern int foo();
++
++#endif /* global_h_included */
+diff --git a/c_testcase/basic/npd2.c b/c_testcase/basic/npd2.c
+new file mode 100644
+index 0000000..a528e9a
+--- /dev/null
++++ b/c_testcase/basic/npd2.c
+@@ -0,0 +1,9 @@
++#include <stdio.h>
++#include "global.h"
++
++void test_npd() {
++  int *a = NULL, b;
++  b = npd_assign(a);   /* try to dereference a which is NULL */
++  printf("value of b = %d\n", b);
++}
++

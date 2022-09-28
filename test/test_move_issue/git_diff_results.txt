@@ -1,0 +1,64 @@
+diff --git a/c_testcase/basic/Makefile b/c_testcase/basic/Makefile
+index bc9515f..d7039ee 100644
+--- a/c_testcase/basic/Makefile
++++ b/c_testcase/basic/Makefile
+@@ -1 +1 @@
+-OBJS=uiv.o npd.o aob.o msf.o dbf.o uaf.o
++OBJS=uiv.o npd.o msf.o dbf.o uaf.o
+diff --git a/c_testcase/basic/aob.c b/c_testcase/basic/aob.c
+deleted file mode 100644
+index 0bb3c93..0000000
+--- a/c_testcase/basic/aob.c
++++ /dev/null
+@@ -1,19 +0,0 @@
+-#include <stdio.h>
+-
+-int assign(int* a, int i)
+-{
+-  return a[i];  /* called by main
+-                   a only has 2 elements but i is 2 */
+-}
+-
+-
+-
+-int main() {
+-  int a[2] = {0, 1}, b;
+-  b = assign(a, 2);  /* call assign with a and i
+-                        a has two elements and i is 2
+-                        a[2] is out-of-bound and also uninitialized */
+-  printf("value of b = %d\n", b);
+-  return 0;
+-}
+-
+diff --git a/c_testcase/misc/Makefile b/c_testcase/misc/Makefile
+index 015c52e..1dd6ecf 100644
+--- a/c_testcase/misc/Makefile
++++ b/c_testcase/misc/Makefile
+@@ -1 +1 @@
+-OBJS=clang-false-positive.o
++OBJS=clang-false-positive.o aob.o
+diff --git a/c_testcase/misc/aob.c b/c_testcase/misc/aob.c
+new file mode 100644
+index 0000000..0bb3c93
+--- /dev/null
++++ b/c_testcase/misc/aob.c
+@@ -0,0 +1,19 @@
++#include <stdio.h>
++
++int assign(int* a, int i)
++{
++  return a[i];  /* called by main
++                   a only has 2 elements but i is 2 */
++}
++
++
++
++int main() {
++  int a[2] = {0, 1}, b;
++  b = assign(a, 2);  /* call assign with a and i
++                        a has two elements and i is 2
++                        a[2] is out-of-bound and also uninitialized */
++  printf("value of b = %d\n", b);
++  return 0;
++}
++

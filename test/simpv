@@ -1,0 +1,114 @@
+#!/usr/bin/env python3
+
+import os
+import json
+import time
+import argparse
+import sys
+
+INPUTFILE = sys.argv[1]
+INPUTNAME = os.path.basename(INPUTFILE)
+DEFAULT_RESULT_FILE = "deduplicate_%s" %INPUTNAME
+
+def _print_err(x):
+    print("[ERROR]: " + x)
+
+
+def _print_info(x):
+    print("[INFO]: " + x)
+
+
+def _print_dbg(x):
+    print("[DEBUG]: " + x)
+
+
+def get_parser():
+    parser = argparse.ArgumentParser(description = "xcal deduplicate v file according to issues' file path.")
+    parser.add_argument(dest = 'scan_result', metavar = 'xxx.v', help = '.v scan result file')
+    parser.add_argument('--debug', '-d', dest = 'debug', action = 'store_true',
+                        help = 'debug mode')
+    return parser
+
+
+def process_issues(issue, issue_list: list, key_list: list):
+    # print(issue)
+    path = issue["paths"][0]
+    lastitem = len(issue["paths"]) - 1
+    lastpath = issue["paths"][lastitem]
+    # key = path["fid"] + "-" + str(path["sln"])
+    key = str(path["fid"]) + "-" + str(path["sln"])
+    # lastkey = lastpath["fid"] + "-" + str(lastpath["sln"])
+    lastkey = str(lastpath["fid"]) + "-" + str(lastpath["sln"])
+    # print(key + " - " + lastkey)
+    if key not in key_list and \
+            lastkey not in key_list:
+        key_list.append(key)
+        key_list.append(lastkey)
+        issue_list.append(issue)
+
+
+def process_result_file(file_name, debug_mode=False):
+    # TODO: need to check the size of the json file
+    with open(file_name, "r") as v_file:
+        v_data = json.load(v_file)
+
+        rule_codes_set = set()
+        for issue in v_data["issues"]:
+            rule_codes_set.add(issue["rc"])
+
+        if debug_mode:
+            _print_dbg("rule_codes_set: %s" % rule_codes_set)
+
+        rule_code_issues_map = {}
+        for rule_code in rule_codes_set:
+            rule_code_issues_map[rule_code] = []
+
+        for issue in v_data["issues"]:
+            rule_code_issues_map[issue["rc"]].append(issue)
+
+        issues_list = []
+        for key in rule_code_issues_map:
+            key_list = []
+            for issue in rule_code_issues_map[key]:
+                process_issues(issue, issues_list, key_list)
+
+        new_v_data = {"files": v_data["files"], "issues": issues_list,
+                      "rulesets": v_data["rulesets"], "v": v_data["v"],
+                      "id": v_data["id"], "s": v_data["s"],
+                      "m": v_data["m"], "eng": v_data["eng"],
+                      "ev": v_data["ev"], "er": v_data["er"],
+                      "x1": v_data["x1"], "x2": v_data["x2"],
+                      "ss": v_data["ss"], "se": v_data["se"]}
+
+    # TODO: result file name should be specified or default value
+    with open(DEFAULT_RESULT_FILE, 'w') as outfile:
+        json.dump(new_v_data, outfile, indent = 1)
+
+
+def command_line_runner():
+    parser = get_parser()
+    arguments = parser.parse_args()
+
+    scan_result = arguments.scan_result
+    debug_mode = arguments.debug
+
+    if not os.path.exists(scan_result) or not os.path.isfile(scan_result) or not os.access(scan_result, os.R_OK):
+        _print_err("%s not exist or not a file or no permission" % scan_result)
+        return
+
+    start = time.time()
+#    _print_info("begin to process scan result file")
+    process_result_file(scan_result, debug_mode)
+#    _print_info("complete process scan result file")
+    end = time.time()
+
+#    _print_info("------------------------------------------------------------------------")
+#    _print_info("EXECUTION SUCCESS")
+#    _print_info("------------------------------------------------------------------------")
+#    _print_info("Total time: %ss" % (end - start))
+#    _print_info("------------------------------------------------------------------------")
+    return
+
+
+if __name__ == "__main__":
+    command_line_runner()

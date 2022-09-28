@@ -1,0 +1,46 @@
+diff --git a/c_testcase/advance/Makefile b/c_testcase/advance/Makefile
+index d0b2efc..ad8d256 100644
+--- a/c_testcase/advance/Makefile
++++ b/c_testcase/advance/Makefile
+@@ -1 +1 @@
+-OBJS = uiv.o npd.o aob.o msf.o dbf.o uaf.o main.o global.o asm_uiv_npd.o wp_eg_npd_ctx.o wp_eg_npd.o wp_eg_obj_sensitive.o xplatform_32_64.o main.o
++OBJS = uiv.o npd.o msf.o uaf.o main.o global.o asm_uiv_npd.o wp_eg_npd_ctx.o wp_eg_npd.o wp_eg_obj_sensitive.o xplatform_32_64.o main.o
+diff --git a/c_testcase/advance/aob.c b/c_testcase/advance/aob.c
+deleted file mode 100644
+index 8a18f08..0000000
+--- a/c_testcase/advance/aob.c
++++ /dev/null
+@@ -1,11 +0,0 @@
+-#include <stdio.h>
+-#include "global.h"
+-
+-void test_aob() {
+-  int a[2] = {0, 1}, b;
+-  b = aob_assign(a, 2);  /* call aob_assign with a and 2
+-                            a only has two elements and 
+-                            2 is out of range */
+-  printf("value of b = %d\n", b);
+-}
+-
+diff --git a/c_testcase/advance/dbf.c b/c_testcase/advance/dbf.c
+deleted file mode 100644
+index 78e2756..0000000
+--- a/c_testcase/advance/dbf.c
++++ /dev/null
+@@ -1,16 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include "global.h"
+-
+-void test_dbf() {
+-  int i, *p, *q;
+-  p = malloc(10 * sizeof(int));
+-  if (p == NULL)
+-    return;
+-  for (i=0; i < 10; ++i)
+-    p[i] = i;
+-  q = p;          /* q now points to p's memory block */
+-  dbf_free_1(p);  /* p is freed the first time */
+-  dbf_free_2(q);  /* p is freed the second time */
+-}
+-

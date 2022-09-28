@@ -1,0 +1,13 @@
+diff --git a/c/true_positive/aob/case_0/case.c b/c/true_positive/aob/case_0/case.c
+index 9f5ba16..f002b3a 100644
+--- a/c/true_positive/aob/case_0/case.c
++++ b/c/true_positive/aob/case_0/case.c
+@@ -17,8 +16,0 @@ int main() {
+-  c = assign(a, 3); // benchmark:vul:aob
+-  
+-  /* call assign with a and i a has two elements and i is 2 a[2] is out-of-bound and also uninitialized */
+-  printf("value of b = %d\n", c);
+-  printf("value of b = %d\n", b);
+-  printf("value of b = %d\n", b);
+-  printf("value of b = %d\n", b);
+-  printf("value of b = %d\n", b);

@@ -1,0 +1,13 @@
+diff --git a/basic/dbf.c b/basic/dbf.c
+index f355240..ecda38f 100644
+--- a/basic/dbf.c
++++ b/basic/dbf.c
+@@ -12,6 +11,0 @@ int func_1(void *p) {
+-int func_2(void *p) {
+-  if (p != NULL) {
+-    free(p);  /* free p */
+-  }
+-}
+-
+@@ -27 +20,0 @@ int main() {
+-  func_2(q);  /* free p the second time */

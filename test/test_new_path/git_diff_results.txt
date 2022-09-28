@@ -1,0 +1,11 @@
+diff --git a/c/true_positive/aob/case_0/case.c b/c/true_positive/aob/case_0/case.c
+index 1e8df89..924d525 100644
+--- a/c/true_positive/aob/case_0/case.c
++++ b/c/true_positive/aob/case_0/case.c
+@@ -23,3 +23,3 @@ int main() {
+-
+-
+-
++  printf("value of b = %d\n", b);
++  printf("value of b = %d\n", b);
++  printf("value of b = %d\n", b);

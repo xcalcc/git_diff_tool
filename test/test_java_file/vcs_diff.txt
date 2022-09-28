@@ -1,0 +1,8 @@
+diff --git a/src/main/java/z/study/gzip/DemoPOC.java b/src/main/java/z/study/gzip/DemoPOC.java
+index 7be6140..64464c6 100644
+--- a/src/main/java/z/study/gzip/DemoPOC.java
++++ b/src/main/java/z/study/gzip/DemoPOC.java
+@@ -8,0 +9 @@ import java.io.*;
++// 20200608
+@@ -14,0 +16 @@ public class DemoPOC {
++      String test = j_npd_02(t);

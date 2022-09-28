@@ -1,0 +1,13 @@
+diff --git a/c/true_positive/aob/case_0/case.c b/c/true_positive/aob/case_0/case.c
+index e486abe..5e4dc78 100644
+--- a/c/true_positive/aob/case_0/case.c
++++ b/c/true_positive/aob/case_0/case.c
+@@ -8,0 +9,2 @@ int assign(int* a, int i)
++
++
+@@ -13,0 +16,2 @@ int main() {
++
++
+@@ -15,0 +20,2 @@ int main() {
++
++
